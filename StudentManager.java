@@ -1,31 +1,32 @@
-// StudentManager.java - Управление студентами
-public class StudentManager {
-    String students[] = new String[100];
-    int count = 0;
+import java.util.ArrayList;
+import java.util.List;
 
-    public void add(String name, int age) {
-        students[count] = name + " " + age;
-        count++;
+public class StudentManager {
+    private final List<Student> students = new ArrayList<>();
+
+    public void addStudent(String name, int age) {
+        students.add(new Student(name, age));
     }
 
-    public void show() {
-        for(int i = 0; i < count; i++) {
-            System.out.println("Student: " + students[i]);
+    public void displayAllStudents() {
+        for (Student student : students) {
+            System.out.println(student);
         }
     }
 
-    public String find(String n) {
-        for(int i = 0; i < count; i++) {
-            if(students[i].contains(n)) {
-                return students[i];
+    public Student findStudentByName(String name) {
+        for (Student student : students) {
+            if (student.getName().equals(name)) {
+                return student;
             }
         }
-        return "Not found";
+        return null;
     }
 
-    public void doAll(String name, int age) {
-        add(name, age);
-        show();
-        System.out.println("Found: " + find(name));
+    public void processStudent(String name, int age) {
+        addStudent(name, age);
+        displayAllStudents();
+        Student found = findStudentByName(name);
+        System.out.println("Found: " + (found != null ? found : "Not found"));
     }
 }
